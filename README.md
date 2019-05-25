@@ -1,4 +1,4 @@
-# Hyperbolic Coaelesccent Embeddings in Python
+# Hyperbolic Coalescent Embeddings in Python
 
 A Python implementation of "Machine learning meets complex networks via coalescent embedding in the hyperbolic space".
 

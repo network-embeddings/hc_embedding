@@ -1,6 +1,6 @@
-""" Hyperbolic Coaelesccent Embeddings
+""" Hyperbolic Coalescent Embeddings
 
-input: an edgelist
+input: an edge list
 
 output: a table with the each node's coordinate
 
