@@ -1,12 +1,12 @@
 import networkx as nx
 import numpy as np
+from itertools import combinations
 
 def number_of_common_neighbors(g):
     N = g.number_of_nodes()
     cn = np.zeros((N, N))
-    for i, u in enumerate(g.nodes()):
-        for j, v in enumerate(g.nodes()):
-            cn[i, j] = len(list(nx.common_neighbors(g, u, v)))
+    for (u, v) in enumerate(g.nodes()):
+        cn[u, v] = len(list(nx.common_neighbors(g, u, v)))
     return cn
 
 
@@ -40,14 +40,5 @@ def RA2_weights(g):
 
 
 def EBC_weights(g):
-    N = g.number_of_nodes()
-    weights = np.zeros((N, N))
-
-    for u in g.nodes():
-        for v in g.neighbors(u):
-            sp = list(nx.all_shortest_paths(g, u, v))
-            for p in sp:
-                for _i in range(len(p) - 1):
-                    weights[p[_i], p[_i - 1]] += 1 / len(sp)
-
+    weights = nx.edge_betweenness_centrality(g)
     return weights
