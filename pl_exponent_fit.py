@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 import plfit
 
 
-
 def get_pl_exponent(g):
     degree = np.array(g.degree())[:, 1]
     myplfit = plfit.plfit(degree)
