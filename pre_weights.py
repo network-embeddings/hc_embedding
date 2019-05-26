@@ -1,14 +1,20 @@
 import networkx as nx
 import numpy as np
-from itertools import combinations
+from itertools import product
 
 def number_of_common_neighbors(g):
     N = g.number_of_nodes()
-    cn = np.zeros((N, N))
-    for (u, v), (i, j) in zip(combinations(g.nodes(), 2),
-                              combinations(range(N), 2)):
-        cn[i, j] = len(list(nx.common_neighbors(g, u, v)))
-    return cn + cn.T
+    weights = []
+    for e in g.edges():
+        u, v = e[0], e[1]
+        w = len(list(nx.common_neighbors(g, u, v)))
+        weights.append((u, v, w))
+        print(u, v, w)
+
+    _g = g.copy()
+    _g.add_weighted_edges_from(weights)
+
+    return nx.to_numpy_array(_g)
 
 
 def external_degree(g):
@@ -39,5 +45,15 @@ def EBC_weights(g):
     _g = g.copy()
     _g.add_weighted_edges_from(edges)
 
-
     return nx.to_numpy_array(_g)
+
+N = 10
+avgk = 3
+g = nx.gnp_random_graph(N, avgk/(N - 1))
+
+import matplotlib.pyplot as plt
+nx.draw(g, with_labels=True)
+plt.show()
+
+print(number_of_common_neighbors(g))
+print(nx.to_numpy_array(g))
