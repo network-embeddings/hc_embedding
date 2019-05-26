@@ -7,6 +7,7 @@ output: a table with the each node's coordinate
 """
 import argparse
 import math
+import logging
 from itertools import combinations
 
 import plfit
@@ -76,11 +77,12 @@ def EBC_weights(g):
     _g = g.copy()
     _g.add_weighted_edges_from(edges)
 
-
     return nx.to_numpy_array(_g)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='coalescent embedding in the hyperbolic space.')
     parser.add_argument('infile', metavar='edgelist', type=str,
                     help='an input network file (edgelist)')
+    args = parser.parse_args()
+
 
