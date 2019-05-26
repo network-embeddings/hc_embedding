@@ -31,9 +31,8 @@ def get_parser():
         type=str,
         help='An input network file containing an edge list.',
     )
-
     parser.add_argument(
-        '-s'
+        '-s',
         '--save',
         type=bool,
         default=True,
