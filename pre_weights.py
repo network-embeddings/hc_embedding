@@ -1,5 +1,6 @@
 import networkx as nx
 import numpy as np
+from itertools import combinations
 
 
 def number_of_common_neighbors(g):
@@ -14,10 +15,10 @@ def number_of_common_neighbors(g):
     """
     N = g.number_of_nodes()
     cn = np.zeros((N, N))
-    for i, u in enumerate(g.nodes()):
-        for j, v in enumerate(g.nodes()):
-            cn[i, j] = len(list(nx.common_neighbors(g, u, v)))
-    return cn
+    for (u, v), (i, j) in zip(combinations(g.nodes(), 2),
+                              combinations(range(N), 2)):
+        cn[i, j] = len(list(nx.common_neighbors(g, u, v)))
+    return cn + cn.T
 
 
 def external_degree(g):
@@ -42,15 +43,6 @@ def external_degree(g):
     return ext_degree.T
 
 
-def norm_angles(coords):
-    N = coords.shape[0]
-
-    angles = np.arctan(coords[:, 1], coords[:, 0])
-    angles[(coords[:, 0] > 0) * (coords[:, 1] > 0)] += np.pi
-    angles[(coords[:, 0] > 0) * (coords[:, 1] < 0)] -= np.pi
-    return angles
-
-
 def RA1_weights(g):
     degree = np.array(g.degree())[:, 1]
     di, dj = np.meshgrid(degree, degree)
@@ -65,14 +57,10 @@ def RA2_weights(g):
 
 
 def EBC_weights(g):
-    N = g.number_of_nodes()
-    weights = np.zeros((N, N))
+    w = nx.edge_betweenness_centrality(g)
+    edges = [(u, v, w[(u,v)]) for u, v in w]
+    _g = g.copy()
+    _g.add_weighted_edges_from(edges)
 
-    for u in g.nodes():
-        for v in g.neighbors(u):
-            sp = list(nx.all_shortest_paths(g, u, v))
-            for p in sp:
-                for _i in range(len(p) - 1):
-                    weights[p[_i], p[_i - 1]] += 1 / len(sp)
 
-    return weights
+    return nx.to_numpy_array(_g)
