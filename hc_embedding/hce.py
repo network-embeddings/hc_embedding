@@ -12,11 +12,8 @@ import networkx as nx
 from matplotlib.collections import LineCollection
 from sklearn import manifold
 
-import angular_coords
-import pl_exponent_fit
-import pre_weights
-import radial_coord
-from curved_edges import curved_edges
+from hc_embedding import pl_exponent_fit, radial_coord, angular_coords, pre_weights
+from hc_embedding.curved_edges import curved_edges
 
 
 def get_parser():

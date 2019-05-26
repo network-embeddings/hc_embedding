@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import networkx as nx
 
-from hce import draw_hce
+from hc_embedding.hce import draw_hce
 
 
 if __name__ == '__main__':
