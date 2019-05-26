@@ -1,6 +1,5 @@
 import networkx as nx
 import numpy as np
-<<<<<<< HEAD
 from itertools import product
 
 def number_of_common_neighbors(g):
