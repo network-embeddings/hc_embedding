@@ -1,1 +1,1 @@
-from .hce import hce, draw_hce
+from .hce import hc_embedding, draw_hce

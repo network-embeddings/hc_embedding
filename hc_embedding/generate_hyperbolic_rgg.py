@@ -1,7 +1,9 @@
-import logging
 import argparse
+import logging
+
 import networkx as nx
 import numpy as np
+
 
 def random_position_hyperbolic(R):
     """Random uniform position on a circle of radius R."""
@@ -36,6 +38,7 @@ def hyperbolic_random_graph(n, R):
 
     return g
 
+
 def from_polar(pos):
     theta = pos[0]
     r = pos[1]
@@ -43,6 +46,7 @@ def from_polar(pos):
     x = r * np.cos(theta)
     y = r * np.sin(theta)
     return x, y
+
 
 def generate_save(n, avgk, filename):
     R = 2 * np.log(8 * n / (np.pi * avgk))
@@ -56,17 +60,31 @@ def generate_save(n, avgk, filename):
     np.savetxt(filename + '_position.txt', pos)
 
 
-
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
-    parser = argparse.ArgumentParser(description='generate a random geometric graph in hyperbolic dist.')
-    parser.add_argument('num_nodes', metavar='num_nodes', type=int,
-                    help='number of nodes.')
-    parser.add_argument('avgk', metavar='avgk', type=float,
-                    help='average degree of the network.')
-    parser.add_argument('filename', metavar='filename', type=str,
-                    help='Name of file where edgelist and positions are saved.')
+    parser = argparse.ArgumentParser(
+        description='generate a random geometric graph in hyperbolic dist.',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument(
+        'num_nodes',
+        metavar='num_nodes',
+        type=int,
+        help='number of nodes.',
+    )
+    parser.add_argument(
+        'avgk',
+        metavar='avgk',
+        type=float,
+        help='average degree of the network.',
+    )
+    parser.add_argument(
+        'filename',
+        metavar='filename',
+        type=str,
+        help='Name of file where edgelist and positions are saved.',
+    )
     args = parser.parse_args()
     logging.info(args)
     generate_save(args.num_nodes, args.avgk, args.filename)

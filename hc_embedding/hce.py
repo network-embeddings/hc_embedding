@@ -12,8 +12,8 @@ import networkx as nx
 from matplotlib.collections import LineCollection
 from sklearn import manifold
 
-from hc_embedding import pl_exponent_fit, radial_coord, angular_coords, pre_weights
-from hc_embedding.curved_edges import curved_edges
+from . import pl_exponent_fit, radial_coord, angular_coords, pre_weights
+from .curved_edges import curved_edges
 
 
 def get_parser():
@@ -52,7 +52,7 @@ def get_parser():
     return parser
 
 
-def hce(G, pre_weighting='RA1', embedding=None, angular='EA'):
+def hc_embedding(G, pre_weighting='RA1', embedding=None, angular='EA'):
     """
     Computes a hyperbolic coalescent embedding of a given graph.
     Args:
@@ -80,7 +80,7 @@ def hce(G, pre_weighting='RA1', embedding=None, angular='EA'):
 
 
 def draw_hce(G, title=''):
-    pos = hce(G)
+    pos = hc_embedding(G)
     edges = curved_edges(G, pos)
     lc = LineCollection(edges, color='#7d7d7d', alpha=0.75)
 
