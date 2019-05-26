@@ -55,4 +55,4 @@ if __name__ == "__main__":
         help='an input network file (edgelist)',
     )
     args = parser.parse_args()
-logging.info(args)
+    logging.info(args)
