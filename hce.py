@@ -12,12 +12,14 @@ import logging
 
 import matplotlib.pyplot as plt
 import networkx as nx
+from matplotlib.collections import LineCollection
 from sklearn import manifold
 
 import angular_coords
 import pl_exponent_fit
 import pre_weights
 import radial_coord
+from curved_edges import curved_edges
 
 
 def get_parser():
@@ -85,6 +87,25 @@ def hce(G, pre_weighting='RA1', embedding=None, angular='EA'):
     return {node: coord for node, coord in zip(G.nodes, coords)}
 
 
+def draw_hce(G, title=''):
+    pos = hce(G)
+    edges = curved_edges(G, pos)
+    lc = LineCollection(edges, color='#7d7d7d', alpha=0.75)
+
+    fig, ax = plt.subplots()
+    plt.title(title)
+
+    nx.draw_networkx_nodes(G, pos, node_size=5, node_color='w', alpha=0.75)
+    plt.gca().add_collection(lc)
+    nx.draw(
+        G,
+        pos=pos,
+        ax=ax,
+        connectionstyle='arc3,rad=0.3',
+        edge_color='#7d7d7d'
+    )
+
+
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
@@ -93,12 +114,7 @@ if __name__ == "__main__":
 
     G = nx.read_edgelist(args.edgelist)
 
-    fig, ax = plt.subplots()
-    nx.draw(
-        G,
-        pos=hce(G),
-        ax=ax,
-    )
+    draw_hce(G)
 
     if args.save:
         plt.savefig(args.output_path)

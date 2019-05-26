@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import networkx as nx
 
-from hce import hce
+from hce import draw_hce
 
 
 if __name__ == '__main__':
@@ -10,7 +10,7 @@ if __name__ == '__main__':
         nx.davis_southern_women_graph(),
         nx.les_miserables_graph(),
         nx.florentine_families_graph(),
-        nx.powerlaw_cluster_graph(500, 1, 0.001),
+        nx.powerlaw_cluster_graph(250, 1, 0.001),
     ]
     labels = [
         "Karate",
@@ -20,12 +20,7 @@ if __name__ == '__main__':
         "Power Law Cluster",
     ]
 
-    for G, l in zip(graphs, labels):
-        fig, ax = plt.subplots()
-        nx.draw(
-            G,
-            pos=hce(G),
-            ax=ax,
-        )
-        plt.savefig(f"{l.lower().replace(' ', '_')}_test.png")
+    for G, title in zip(graphs, labels):
+        draw_hce(G, title)
+        plt.savefig(f"{title.lower().replace(' ', '_')}_test.png")
         plt.close()
