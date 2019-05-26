@@ -6,11 +6,15 @@ output: a table with the each node's coordinate
 
 """
 
+import argparse
+import logging
+
+from sklearn import manifold
+
 import angular_coords
 import pl_exponent_fit
 import pre_weights
 import radial_coord
-from sklearn import manifold
 
 
 def hce(G, pre_weighting='RA1', embedding=None, angular='EA'):
@@ -43,4 +47,17 @@ def hce(G, pre_weighting='RA1', embedding=None, angular='EA'):
 
 
 if __name__ == "__main__":
-    pass
+    logging.basicConfig(level=logging.INFO)
+
+    parser = argparse.ArgumentParser(
+        description='Coalescent embedding in the hyperbolic space.',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument(
+        'infile',
+        metavar='edgelist',
+        type=str,
+        help='an input network file (edgelist)',
+    )
+    args = parser.parse_args()
+    logging.info(args)

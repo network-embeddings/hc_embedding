@@ -1,4 +1,5 @@
 matplotlib
+networkx
 numpy
-plfit
+powerlaw
 scipy
