@@ -10,7 +10,7 @@ import math
 import logging
 from itertools import combinations
 
-import plfit
+from powerlaw import Power_Law
 import numpy as np
 import networkx as nx
 from scipy.stats import linregress
@@ -35,9 +35,9 @@ def radial_coord(G, zeta, beta):
 
 def get_pl_exponent(g):
     degree = np.array(g.degree())[:, 1]
-    myplfit = plfit.plfit(degree)
-    x = plfit.plfit.discrete_best_alpha(myplfit, finite=False, verbose=0)
-    return x[0]
+    pl = Power_Law()
+    pl.fit(degree)
+    return pl.alpha
 
 
 def number_of_common_neighbors(g):
