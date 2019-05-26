@@ -35,7 +35,7 @@ def external_degree(g):
     Returns: numpy.ndarray
         (N, N) array, each value is the external degree of node i w.r.t. node j.
     """
-    degree = np.array(g.degree())[:, 1]
+    degree = np.array(g.degree())[:, 1].astype(float)
     adj = nx.to_numpy_array(g)
     cn = number_of_common_neighbors(g)
     d = np.repeat(degree.reshape(1, -1), degree.shape[0], axis=0)
@@ -44,7 +44,7 @@ def external_degree(g):
 
 
 def RA1_weights(g):
-    degree = np.array(g.degree())[:, 1]
+    degree = np.array(g.degree())[:, 1].astype(float)
     di, dj = np.meshgrid(degree, degree)
     cn = number_of_common_neighbors(g)
     return (di + dj + di * dj) / (1 + cn)
@@ -58,9 +58,8 @@ def RA2_weights(g):
 
 def EBC_weights(g):
     w = nx.edge_betweenness_centrality(g)
-    edges = [(u, v, w[(u,v)]) for u, v in w]
+    edges = [(u, v, w[(u, v)]) for u, v in w]
     _g = g.copy()
     _g.add_weighted_edges_from(edges)
-
 
     return nx.to_numpy_array(_g)

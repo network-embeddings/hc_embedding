@@ -43,6 +43,6 @@ def radial_coord_deg(G, beta, zeta=1):
     Returns: numpy.ndarray
         Radial coordinate for each node in a graph.
     """
-    degrees = np.array(G.degree())[:, 1]
+    degrees = np.array(G.degree())[:, 1].astype(float)
     inds = np.argsort(degrees)
-    return 2 / zeta * (beta * np.log(inds) + (1 - beta) * np.log(len(inds)))
+    return 2 / zeta * (beta * np.log(inds + 1) + (1 - beta) * np.log(len(inds)))

@@ -35,12 +35,12 @@ def hce(G, pre_weighting='RA1', embedding=None, angular='EA'):
 
     coords = angular_func(embedded_weights)
 
-    beta = pl_exponent_fit.get_pl_exponent(G)
+    beta = 1 / (pl_exponent_fit.get_pl_exponent(G) - 1)
     radii = radial_coord.radial_coord_deg(G, beta)
 
-    return coords * radii
+    coords = coords * radii[..., None]
+    return {node: coord for node, coord in zip(G.nodes, coords)}
 
 
 if __name__ == "__main__":
-    # TODO: Add CLI logic here, should load the graph, pass it to hce, and then plot the result.
     pass
