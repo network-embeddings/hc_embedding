@@ -5,6 +5,7 @@ input: an edgelist
 output: a table with the each node's coordinate
 
 """
+import argparse
 import math
 from itertools import combinations
 
@@ -36,6 +37,7 @@ def get_pl_exponent(g):
     myplfit = plfit.plfit(degree)
     x = plfit.plfit.discrete_best_alpha(myplfit, finite=False, verbose=0)
     return x[0]
+
 
 def number_of_common_neighbors(g):
     N = g.number_of_nodes()
@@ -78,4 +80,4 @@ def EBC_weights(g):
     return nx.to_numpy_array(_g)
 
 if __name__ == "__main__":
-    pass
+    parser = argparse.ArgumentParser(description='Process some integers.')
