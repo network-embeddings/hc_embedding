@@ -5,16 +5,15 @@ input: an edgelist
 output: a table with the each node's coordinate
 
 """
-import networkx as nx
-import numpy as np
-import networkx as nx
-import numpy as np
+import math
 from itertools import combinations
+
+import plfit
+import numpy as np
+import networkx as nx
 from scipy.stats import linregress
 import matplotlib.pyplot as plt
-import plfit
 
-import math
 
 def radial_coord(G, zeta, beta):
     """
