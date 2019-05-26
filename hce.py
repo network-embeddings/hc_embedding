@@ -80,4 +80,7 @@ def EBC_weights(g):
     return nx.to_numpy_array(_g)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser = argparse.ArgumentParser(description='coalescent embedding in the hyperbolic space.')
+    parser.add_argument('infile', metavar='edgelist', type=str,
+                    help='an input network file (edgelist)')
+
