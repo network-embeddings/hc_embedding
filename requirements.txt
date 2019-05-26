@@ -1,5 +1,5 @@
-Cython
-plfit
-scipy
+matplotlib
 networkx
 numpy
+powerlaw
+scipy
