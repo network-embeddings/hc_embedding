@@ -1,9 +1,6 @@
 """ Hyperbolic Coalescent Embeddings
-
 input: an edge list
-
 output: a table with the each node's coordinate
-
 """
 
 
@@ -61,13 +58,11 @@ def get_parser():
 def hce(G, pre_weighting='RA1', embedding=None, angular='EA'):
     """
     Computes a hyperbolic coalescent embedding of a given graph.
-
     Args:
         G: networkx.Graph
         pre_weighting: str, Determines the features that are passed to the dimensionality reduction method.
         embedding: Object, An embedding model that implements the fit_transform method (like sklearn.manifold.SpectralEmbedding).
         angular: str, Determines the method used to create the angular coordinates for the final embedding.
-
     Returns: numpy.ndarray
         (N, 2) array that contains the spatial (x, y) coordinates of the embedded network.
     """
@@ -108,17 +103,14 @@ def draw_hce(G, title=''):
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
-
     args = get_parser().parse_args()
     logging.info(args)
 
     G = nx.read_edgelist(args.edgelist)
-
     draw_hce(G)
 
     if args.save:
         plt.savefig(args.output_path)
-
     if args.display:
         plt.show()
 
