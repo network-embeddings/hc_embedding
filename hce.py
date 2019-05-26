@@ -80,9 +80,12 @@ def EBC_weights(g):
     return nx.to_numpy_array(_g)
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.INFO)
+
     parser = argparse.ArgumentParser(description='coalescent embedding in the hyperbolic space.')
     parser.add_argument('infile', metavar='edgelist', type=str,
                     help='an input network file (edgelist)')
     args = parser.parse_args()
+    logging.info(args)
 
 
