@@ -1,6 +1,24 @@
 import networkx as nx
 import numpy as np
-from itertools import combinations
+from itertools import product
+
+def number_of_common_neighbors(g):
+    N = g.number_of_nodes()
+    weights = []
+    for e in g.edges():
+        u, v = e[0], e[1]
+        w = len(list(nx.common_neighbors(g, u, v)))
+        weights.append((u, v, w))
+
+    _g = g.copy()
+    _g.add_weighted_edges_from(weights)
+
+    return nx.to_numpy_array(_g)
+
+
+def external_degree(g):
+    degree = np.array(g.degree())[:, 1]
+    N = g.number_of_nodes()
 
 
 def number_of_common_neighbors(g):
@@ -42,6 +60,8 @@ def external_degree(g):
     ext_degree = (d - cn - 1) * adj
     return ext_degree.T
 
+def RA1_weights(g):
+    degree = np.array(g.degree())[:, 1]
 
 def RA1_weights(g):
     degree = np.array(g.degree())[:, 1].astype(float)
