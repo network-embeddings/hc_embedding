@@ -6,15 +6,55 @@ output: a table with the each node's coordinate
 
 """
 
+
 import argparse
 import logging
 
+import matplotlib.pyplot as plt
+import networkx as nx
 from sklearn import manifold
 
 import angular_coords
 import pl_exponent_fit
 import pre_weights
 import radial_coord
+
+
+def get_parser():
+    parser = argparse.ArgumentParser(
+        description='Coalescent embedding in the hyperbolic space.',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument(
+        'infile',
+        metavar='edgelist',
+        type=str,
+        help='An input network file containing an edge list.',
+    )
+
+    parser.add_argument(
+        '-s'
+        '--save',
+        type=bool,
+        default=True,
+        help='Toggles saving of the visualized network.',
+    )
+    parser.add_argument(
+        '-o',
+        '--output_path',
+        type=str,
+        default='./hce_network.png',
+        help='Location where the network visualization should be saved, can also control the output format.',
+    )
+    parser.add_argument(
+        '-d',
+        '--display',
+        type=bool,
+        default=True,
+        help='Toggles the display of the visualized network.',
+    )
+
+    return parser
 
 
 def hce(G, pre_weighting='RA1', embedding=None, angular='EA'):
@@ -49,15 +89,22 @@ def hce(G, pre_weighting='RA1', embedding=None, angular='EA'):
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO)
 
-    parser = argparse.ArgumentParser(
-        description='Coalescent embedding in the hyperbolic space.',
-        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-    )
-    parser.add_argument(
-        'infile',
-        metavar='edgelist',
-        type=str,
-        help='an input network file (edgelist)',
-    )
-    args = parser.parse_args()
+    args = get_parser().parse_args()
     logging.info(args)
+
+    G = nx.read_edgelist(args.edgelist)
+
+    fig, ax = plt.subplots()
+    nx.draw(
+        G,
+        pos=hce(G),
+        ax=ax,
+    )
+
+    if args.save:
+        plt.savefig(args.output_path)
+
+    if args.display:
+        plt.show()
+
+    plt.close()
