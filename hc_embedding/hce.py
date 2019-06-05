@@ -79,23 +79,32 @@ def hc_embedding(G, pre_weighting='RA1', embedding=None, angular='EA'):
     return {node: coord for node, coord in zip(G.nodes, coords)}
 
 
-def draw_hce(G, title=''):
+def draw_hce(
+        G,
+        title='',
+        node_size=300,
+        node_alpha=1.0,
+        edge_alpha=0.75,
+):
     pos = hc_embedding(G)
     edges = curved_edges(G, pos)
-    lc = LineCollection(edges, color='#7d7d7d', alpha=0.75)
+    lc = LineCollection(edges, color='#7d7d7d', alpha=edge_alpha)
 
     fig, ax = plt.subplots()
+    plt.axis('off')
     plt.title(title)
 
-    nx.draw_networkx_nodes(G, pos, node_size=5, node_color='w', alpha=0.75)
-    plt.gca().add_collection(lc)
-    nx.draw(
+    ax.add_collection(lc)
+    nx.draw_networkx_nodes(
         G,
         pos=pos,
+        node_size=node_size,
+        alpha=node_alpha,
         ax=ax,
-        connectionstyle='arc3,rad=0.3',
-        edge_color='#7d7d7d'
+        edgecolors='#0a5078',
     )
+
+    return fig
 
 
 if __name__ == "__main__":
