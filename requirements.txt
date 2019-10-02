@@ -1,3 +1,4 @@
+bezier
 matplotlib
 networkx
 numpy
