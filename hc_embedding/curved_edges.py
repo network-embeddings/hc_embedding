@@ -60,7 +60,7 @@ def curved_edges(G, pos, dist_ratio=0.2, bezier_precision=20, polarity='random')
     curveplots = []
     for i in range(l):
         nodes = node_matrix[:, i, :].T
-        curveplots.append(bezier.Curve(nodes, degree=2).evaluate_multi(np.linspace(0, 1, bezier_precision)).T)
+        curveplots.append(bezier.Curve(nodes, degree=3).evaluate_multi(np.linspace(0, 1, bezier_precision)).T)
 
     # Return an array of these curves
     curves = np.array(curveplots)

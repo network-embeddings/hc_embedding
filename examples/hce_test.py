@@ -3,7 +3,6 @@ import networkx as nx
 
 from hc_embedding import draw_hce
 
-
 if __name__ == '__main__':
     graphs = [
         nx.karate_club_graph(),
